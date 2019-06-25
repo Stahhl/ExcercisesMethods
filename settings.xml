@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings>
+    <setting>
+        <separator>,</separator>
+        <seeError>true</seeError>
+    </setting>
+    <yesword>
+        <word>yes</word>
+        <word>ja</word>
+        <word>si</word>
+        <word>oui</word>
+    </yesword>
+    <noword>
+        <word>no</word>
+        <word>nej</word>    
+        <word>nyet</word>
+        <word>non</word>
+    </noword>
+</settings>

@@ -12,21 +12,53 @@ namespace ExcercisesMethods
             {
                 Console.Clear();
                 Console.WriteLine("Module 1 loaded: Creating Methods: ");
+                MoreOptions();
             }
 
             Console.WriteLine("Enter a string of names seperated by comma: ");
             List<string> separatedNames = GetNames(Console.ReadLine());
             foreach (string s in separatedNames)
             {
-                Program.PrintColoredMessage($"***{s.ToUpper()}***", ConsoleColor.Green);
+                Program.PrintGreenMsg($"***{s.ToUpper()}***");
             }
             Program.Restart();
+        }
+        static void MoreOptions()
+        {
+            string input = string.Empty;
+
+            Console.WriteLine("Which separator do you want to use (default is comma) ? : ");
+            input = Console.ReadLine();
+            if(input.Length != 1)
+            {
+                Program.PrintRedMsg("Input should only be one character! ");
+                MoreOptions();
+            }
+            else
+            {
+                Program.seperator = input;
+            }
+            Console.WriteLine("Do you want to see error messages (default is yes) ? : ");
+            input = Console.ReadLine().ToLower();
+            if(Program.yesWords.Contains(input) == true)
+            {
+                Program.seeErrorMsg = true;
+            }
+            if (Program.noWords.Contains(input) == true)
+            {
+                Program.seeErrorMsg = false;
+            }
+            if (Program.yesWords.Contains(input) == false && Program.noWords.Contains(input) == false)
+            {
+                Program.PrintRedMsg($"Didn't recognize: '{input}'");
+                MoreOptions();
+            }
         }
         static void ValidateInputString(string input)
         {
             if(input == string.Empty)
             {
-                Program.PrintColoredMessage($"Empty input! ", ConsoleColor.Red);
+                Program.PrintRedMsg($"Empty input! ");
                 Start(false);
             }
         }
@@ -36,14 +68,14 @@ namespace ExcercisesMethods
 
             if(name.Length < 2 || name.Length > 9)
             {
-                Program.PrintColoredMessage($"A person can only have 2 to 9 letters! ", ConsoleColor.Red);
+                Program.PrintRedMsg($"A person can only have 2 to 9 letters! ");
                 value = false;
             }
             foreach (char c in name)
             {
                 if(char.IsLetter(c) == false)
                 {
-                    Program.PrintColoredMessage($"Couldn't convert {c} to a letter! ", ConsoleColor.Red);
+                    Program.PrintRedMsg($"Couldn't convert {c} to a letter! ");
                     value = false;
                 }
             }
@@ -52,7 +84,7 @@ namespace ExcercisesMethods
         static List<string> GetNames(string input)
         {
             ValidateInputString(input);
-            string[] stringArray = input.Split(",");
+            string[] stringArray = input.Split(Program.seperator);
             List<string> stringList = new List<string>();
             for (int i = 0; i < stringArray.Length; i++)
             {
@@ -64,7 +96,7 @@ namespace ExcercisesMethods
                 }
                 else
                 {
-                    Program.PrintColoredMessage($"The format on {stringArray[i]} is wrong wont be adding it! ", ConsoleColor.Red);
+                    Program.PrintRedMsg($"The format on {stringArray[i]} is wrong wont be adding it! ");
                 }
             }
             return stringList;
